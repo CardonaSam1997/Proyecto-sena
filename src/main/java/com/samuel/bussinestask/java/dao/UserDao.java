@@ -1,10 +1,12 @@
 package com.samuel.bussinestask.java.dao;
 
 import com.samuel.bussinestask.java.dao.impl.IUserDao;
+import com.samuel.bussinestask.java.model.Role;
 import com.samuel.bussinestask.java.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao implements IUserDao {
@@ -22,10 +24,36 @@ public class UserDao implements IUserDao {
         this.connection = new ConnectionDB();
     }
 
-    @Override
+    @Override   
     public List<User> listar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "SELECT * FROM users";
+        List<User> usuarios = new ArrayList<>();
+        try {
+            PS = connection.getConnection().prepareStatement(query);
+            RS = PS.executeQuery();
+            while (RS.next()) {
+                User usuario = new User(
+                    RS.getInt("id"),
+                    RS.getString("username"),
+                    RS.getString("password"),
+                    RS.getString("email"),
+                    Role.valueOf(RS.getString("role")),
+                    RS.getBoolean("authentication"),
+                    RS.getBoolean("enable"),
+                    RS.getBoolean("completed"),
+                    RS.getDate("created_at"),
+                    RS.getDate("updated_at")
+                );
+                usuarios.add(usuario);
+            }
+        } catch (SQLException e) {
+            System.err.println("ERROR AL LISTAR: " + e.getMessage());
+        } finally {
+            clearPreparedAndResultAndCloseConnection();
+        }
+        return usuarios;
     }
+
 
     @Override
     public void insertar(User usuario) {

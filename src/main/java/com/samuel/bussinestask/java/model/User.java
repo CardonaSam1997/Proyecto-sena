@@ -14,6 +14,23 @@ public class User  {
     private Date createdAt;
     private Date updatedAt;
     
+    public User(){        
+    }
+
+    public User(int id, String userName, String password, String email, Role role, boolean authentication, boolean enable, boolean completed, Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.authentication = authentication;
+        this.enable = enable;
+        this.completed = completed;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+        
+    
     public User(String userName, String password,String email, Role role){ 
         this.userName = userName;
         this.password = password;
