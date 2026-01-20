@@ -5,16 +5,19 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionDB {
-    private Connection con;
-    //private final String driver="com.mysql.cj.jdbc.Driver";
+    private Connection con;    
     private final String user="root";
     private final String pass="";
-    private final String url="jdbc:mysql://localhost:3306/bussines_task?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+    private final String url="jdbc:mysql://localhost:3306/bussin_task?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     
     public ConnectionDB(){
         this.con = null;
     }
     
+    /**
+     * Permite la conexion con la Base de datos Msyql
+     * @return 
+     */
     public Connection getConnection(){
         try{            
             this.con = DriverManager.getConnection(url,user,pass);
@@ -27,6 +30,9 @@ public class ConnectionDB {
         return this.con;
     }
     
+    /**
+     * Cierra la conexion para que no mantenga abierta
+     */
     public void closeConnection(){        
         try{            
             if (con != null && !con.isClosed()) {
