@@ -1,5 +1,4 @@
 package com.samuel.bussinestask.java.dao.impl;
-
 import com.samuel.bussinestask.java.model.User;
 import java.util.List;
 
