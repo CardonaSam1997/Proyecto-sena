@@ -18,8 +18,13 @@ public class Bussines_task {
         //crud.insertar(usuario);
         System.out.println("\n LISTAR TODOS LOS USUARIOS\n");
         System.out.println(crud.listar());
-        System.out.println("\n LISTAR USUARIOS POR ID\n");
+        System.out.println("\n LISTAR USUARIO POR ID\n");
         System.out.println(crud.buscar(1));
+        System.out.println("\n ELIMINAR USUARIO POR ID\n");
+        crud.eliminar(7);
+        
+        User miguel = new User(6,"miguel","1123","miguel@gmail.com",Role.ADMIN);        
+        crud.actualizar(miguel);
         
     }
 }

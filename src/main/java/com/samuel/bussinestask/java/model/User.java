@@ -42,6 +42,18 @@ public class User  {
         createdAt = new Date(System.currentTimeMillis());        
     }
     
+     public User(int id, String userName, String password,String email, Role role){ 
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.authentication = false;
+        this.enable = false;
+        this.completed = false;        
+        createdAt = new Date(System.currentTimeMillis());        
+    }
+    
     public int getId() {
         return id;
     }

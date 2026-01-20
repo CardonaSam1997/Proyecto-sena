@@ -8,7 +8,7 @@ public class ConnectionDB {
     private Connection con;    
     private final String user="root";
     private final String pass="";
-    private final String url="jdbc:mysql://localhost:3306/bussin_task?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+    private final String url="jdbc:mysql://localhost:3306/bussines_task?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     
     public ConnectionDB(){
         this.con = null;

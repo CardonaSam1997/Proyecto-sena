@@ -115,26 +115,18 @@ public class UserDao implements IUserDao {
             SET username = ?,
                 password = ?,
                 email = ?,
-                role = ?,
-                authentication = ?,
-                enable = ?,
-                completed = ?,
+                role = ?,                                              
                 updated_at = ?
             WHERE id = ?
         """;
-
         try {
             PS = connection.getConnection().prepareStatement(query);
-
             PS.setString(1, usuario.getUserName());
             PS.setString(2, usuario.getPassword());
             PS.setString(3, usuario.getEmail());
-            PS.setString(4, usuario.getRole().name());
-            PS.setBoolean(5, usuario.isAuthentication());
-            PS.setBoolean(6, usuario.isEnable());
-            PS.setBoolean(7, usuario.isCompleted());
-            PS.setDate(8, new java.sql.Date(System.currentTimeMillis()));
-            PS.setInt(9, usuario.getId());
+            PS.setString(4, usuario.getRole().name());            
+            PS.setDate(5, new java.sql.Date(System.currentTimeMillis()));
+            PS.setInt(6, usuario.getId());
 
             int rows = PS.executeUpdate();
 
