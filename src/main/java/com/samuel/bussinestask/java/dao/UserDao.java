@@ -85,7 +85,6 @@ public class UserDao implements IUserDao {
             PS.setInt(1, id);
 
             RS = PS.executeQuery();
-
             if (RS.next()) {
                 usuario = new User(
                     RS.getInt("id"),
@@ -100,28 +99,78 @@ public class UserDao implements IUserDao {
                     RS.getDate("updated_at")
                 );
             }
-
         } catch (SQLException e) {
-            System.err.println("ERROR EN buscar(): " + e.getMessage());
-
+            System.err.println("ERROR AL BUSCAR POR ID: " + e.getMessage());
         } finally {
             clearPreparedAndResultAndCloseConnection();
         }
-
         return usuario;
     }
 
 
     @Override
     public void actualizar(User usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = """
+            UPDATE users
+            SET username = ?,
+                password = ?,
+                email = ?,
+                role = ?,
+                authentication = ?,
+                enable = ?,
+                completed = ?,
+                updated_at = ?
+            WHERE id = ?
+        """;
+
+        try {
+            PS = connection.getConnection().prepareStatement(query);
+
+            PS.setString(1, usuario.getUserName());
+            PS.setString(2, usuario.getPassword());
+            PS.setString(3, usuario.getEmail());
+            PS.setString(4, usuario.getRole().name());
+            PS.setBoolean(5, usuario.isAuthentication());
+            PS.setBoolean(6, usuario.isEnable());
+            PS.setBoolean(7, usuario.isCompleted());
+            PS.setDate(8, new java.sql.Date(System.currentTimeMillis()));
+            PS.setInt(9, usuario.getId());
+
+            int rows = PS.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Usuario actualizado correctamente");
+            } else {
+                System.out.println("No se encontró usuario con id=" + usuario.getId());
+            }
+
+        } catch (SQLException e) {
+            System.err.println("ERROR EN actualizar(): " + e.getMessage());
+
+        } finally {
+            clearPreparedAndResultAndCloseConnection();
+        }
     }
+
 
     @Override
     public void eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "DELETE FROM users WHERE id = ?";
+        try {
+            PS = connection.getConnection().prepareStatement(query);
+            PS.setInt(1, id);
+            int rows = PS.executeUpdate();
+            if (rows > 0) {
+                System.out.println("Usuario eliminado correctamente");
+            } else {
+                System.out.println("No existe usuario con id=" + id);
+            }
+        } catch (SQLException e) {
+            System.err.println("ERROR EN eliminar(): " + e.getMessage());
+
+        } finally {
+            clearPreparedAndResultAndCloseConnection();
+        }
     }
-    
-    
-    
+           
 }
