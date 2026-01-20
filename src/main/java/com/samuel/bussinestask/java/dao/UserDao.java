@@ -78,8 +78,39 @@ public class UserDao implements IUserDao {
 
     @Override
     public User buscar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "SELECT * FROM users WHERE id = ?";
+        User usuario = null;
+        try {
+            PS = connection.getConnection().prepareStatement(query);
+            PS.setInt(1, id);
+
+            RS = PS.executeQuery();
+
+            if (RS.next()) {
+                usuario = new User(
+                    RS.getInt("id"),
+                    RS.getString("username"),
+                    RS.getString("password"),
+                    RS.getString("email"),
+                    Role.valueOf(RS.getString("role")),
+                    RS.getBoolean("authentication"),
+                    RS.getBoolean("enable"),
+                    RS.getBoolean("completed"),
+                    RS.getDate("created_at"),
+                    RS.getDate("updated_at")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.err.println("ERROR EN buscar(): " + e.getMessage());
+
+        } finally {
+            clearPreparedAndResultAndCloseConnection();
+        }
+
+        return usuario;
     }
+
 
     @Override
     public void actualizar(User usuario) {

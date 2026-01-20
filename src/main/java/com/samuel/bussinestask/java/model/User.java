@@ -121,5 +121,9 @@ public class User  {
     public void setUpdateAt(Date updateAt) {
         this.updatedAt = updateAt;
     }   
-       
+
+    @Override
+    public String toString() {
+        return "" + "id=" + id + ", userName=" + userName + ", password=" + password + ", email=" + email + ", role=" + role + ", authentication=" + authentication + ", enable=" + enable + ", completed=" + completed + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '\n';
+    }               
 }
